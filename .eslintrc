@@ -1,0 +1,106 @@
+{
+	"env": {
+		"es6": true,
+		"node": true,
+    "jest": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:prettier/recommended"
+	],
+	"plugins": [
+		"import"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2019,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true,
+			"legacyDecorators": true
+		}
+	},
+	"overrides": [
+		{
+			"files": [
+				"./**/*.js"
+			],
+			"rules": {
+				"no-unused-vars": [
+					2,
+					{
+						"varsIgnorePattern": "^_",
+						"argsIgnorePattern": "^_",
+						"ignoreRestSiblings": true
+					}
+				]
+			}
+		},
+		{
+			"files": [
+				"./**/*{.ts,.tsx}"
+			],
+			"extends": [
+				"prettier",
+				"plugin:@typescript-eslint/recommended"
+			],
+			"plugins": [
+				"@typescript-eslint"
+			],
+			"rules": {
+				"@typescript-eslint/explicit-function-return-type": 0,
+				"@typescript-eslint/no-empty-function": 0,
+				"@typescript-eslint/no-explicit-any": 0,
+				"@typescript-eslint/no-non-null-assertion": 0,
+				"@typescript-eslint/no-unused-vars": [
+					2,
+					{
+						"varsIgnorePattern": "^_",
+						"argsIgnorePattern": "^_",
+						"ignoreRestSiblings": true
+					}
+				]
+			}
+		},
+		{
+			"files": [
+				"./client/**/*{.ts,.tsx}"
+			],
+			"env": {
+				"browser": true
+			},
+			"extends": [
+				"plugin:react/recommended"
+			],
+			"plugins": [
+				"react",
+				"react-hooks"
+			],
+			"parserOptions": {
+				"project": "./client/tsconfig.json"
+			},
+			"globals": {
+				"NODE_ENV": "readonly",
+				"GRAPHQL_HOST": "readonly",
+				"SUBSCRIPTION_PATH": "readonly",
+				"UPLOAD_HOST": "readonly",
+				"PAYMENT_HOST": "readonly",
+				"REPORT_HOST": "readonly",
+				"STATIC_HOST": "readonly"
+			},
+			"settings": {
+				"react": {
+					"pragma": "React",
+					"version": "detect"
+				}
+			},
+			"rules": {
+				"react/display-name": 0,
+                "no-console": 2,
+				"react/jsx-no-target-blank": 0,
+				"react/prop-types": 0,
+				"@typescript-eslint/camelcase": 0
+			}
+		}
+	]
+}
