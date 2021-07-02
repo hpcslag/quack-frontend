@@ -3,9 +3,12 @@ import Link from "next/link";
 
 // layout for page
 
-import Auth from "layouts/Auth.js";
+import Auth from "../../layouts/Auth";
 
-export default function Login() {
+// @ts-nocheck
+// const enable_other_way_loign = false;
+
+const Login = () => {
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -116,5 +119,7 @@ export default function Login() {
     </>
   );
 }
+
+export default Login;
 
 Login.layout = Auth;
