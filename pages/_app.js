@@ -9,6 +9,9 @@ import PageChange from "../components/PageChange/PageChange.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../styles/tailwind.css";
 
+import { ApolloProvider } from "@apollo/client";
+import client from "./apollo-client";
+
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
   document.body.classList.add("body-page-transition");
@@ -74,7 +77,9 @@ export default class MyApp extends App {
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
         <Layout>
-          <Component {...pageProps} />
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
         </Layout>
       </React.Fragment>
     );
