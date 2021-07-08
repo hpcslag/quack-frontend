@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import { gql, useMutation } from "@apollo/react-hooks";
 
 // layout for page
 
@@ -10,12 +11,48 @@ enum LoginMethodType {
   UsernamePassowrd,
 }
 
+const LOGIN_MUTATION = gql`
+  mutation Login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      accessToken
+    }
+  }
+`
+
+interface LOGIN_MUTATION_VARIABLES {
+  username: string;
+  password: string;
+}
+
+interface LOGIN_MUTATION_RESULT {
+  accessToken: string;
+}
+
 const Login = () => {
+
+  const [login] = useMutation<LOGIN_MUTATION_RESULT, LOGIN_MUTATION_VARIABLES>(LOGIN_MUTATION);
+
   const [loginMethod, setLoginMethod] = useState<LoginMethodType>(
     LoginMethodType.Google
   );
 
-  const onLogin = () => {};
+  const loginParams : LOGIN_MUTATION_VARIABLES = {
+    username: "a",
+    password: "a"
+  }
+
+  const onLogin = async (e : any) => {
+    e.preventDefault();
+
+    const { data } = await login({
+      variables: loginParams
+    });
+
+    const accessToken = data?.accessToken
+    
+    console.log(accessToken); //write in local storage
+
+  };
 
   return (
     <>
@@ -63,7 +100,7 @@ const Login = () => {
                     <div className="text-blueGray-400 text-center mb-3 font-bold">
                       <small>Or sign in with credentials</small>
                     </div>
-                    <form>
+                    <form onSubmit={onLogin}>
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
