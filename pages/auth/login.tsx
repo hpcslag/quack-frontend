@@ -7,6 +7,7 @@ import { Form, Field } from "react-final-form";
 // layout for page
 
 import Auth from "../../layouts/Auth";
+import { JwtStorage } from "../../common/auth/jwt/jwt";
 
 enum LoginMethodType {
   Google,
@@ -55,17 +56,30 @@ const Login = () => {
     return errors;
   };
 
-  const onLogin = async ({ email, password, remember_me = false }: any) => {
+  const [loginState, setLoginState] = useState({
+    error: false,
+    errorMessage: "",
+  });
+
+  const onLogin = async ({ email, password }: any) => {
     const loginParams: LOGIN_MUTATION_VARIABLES = {
       username: email,
       password: password,
     };
 
-    const { data } = await login({
-      variables: loginParams,
-    });
+    try {
+      const { data } = await login({
+        variables: loginParams,
+      });
 
-    console.log(data?.login.accessToken);
+      const jwt = new JwtStorage("accessToken");
+      jwt.token = data?.login.accessToken || null;
+    } catch (e) {
+      setLoginState({
+        error: true,
+        errorMessage: "Wrong username or password. ",
+      });
+    }
   };
 
   return (
@@ -113,6 +127,14 @@ const Login = () => {
                   <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                     <div className="text-blueGray-400 text-center mb-3 font-bold">
                       <small>Or sign in with credentials</small>
+                      {loginState.error && (
+                        <>
+                          <br />
+                          <small style={{ color: "red" }}>
+                            {loginState.errorMessage}
+                          </small>
+                        </>
+                      )}
                     </div>
                     <Form
                       onSubmit={onLogin}
@@ -165,25 +187,6 @@ const Login = () => {
                                     {meta.error}
                                   </span>
                                 )}
-                              </div>
-                            )}
-                          />
-
-                          <Field
-                            name="remember_me"
-                            render={({ input }) => (
-                              <div>
-                                <label className="inline-flex items-center cursor-pointer">
-                                  <input
-                                    id="customCheckLogin"
-                                    type="checkbox"
-                                    className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                                    {...input}
-                                  />
-                                  <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                                    Remember me
-                                  </span>
-                                </label>
                               </div>
                             )}
                           />
