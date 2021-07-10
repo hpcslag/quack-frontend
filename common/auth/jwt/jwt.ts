@@ -25,7 +25,7 @@ export class JwtStorage {
   }
 
   private setJWT(token: string) {
-    if (token !== this._jwt && !!this._payload) {
+    if (token !== this._jwt) {
       localStorage.setItem(this.key, token);
       this._jwt = token;
       this._payload = jwtDecode(token);
@@ -51,7 +51,7 @@ export class JwtStorage {
     return this._payload;
   }
 
-  get jwt(): string | null {
+  get token(): string | null {
     return this.isValid ? this._jwt : null;
   }
 
