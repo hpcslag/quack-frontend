@@ -96,7 +96,7 @@ const Login = () => {
     if (pathname) {
       location.href = location.origin + pathname;
     } else {
-      location.href = "/admin/dashboard";
+      location.href = "/dashboard";
     }
   };
 
