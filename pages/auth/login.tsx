@@ -72,13 +72,32 @@ const Login = () => {
         variables: loginParams,
       });
 
-      const jwt = new JwtStorage("accessToken");
-      jwt.token = data?.login.accessToken || null;
+      setLoginSession(data);
+
+      redirectToRouter(getCurrentURLRedirect());
     } catch (e) {
       setLoginState({
         error: true,
         errorMessage: "Wrong username or password. ",
       });
+    }
+  };
+
+  const setLoginSession = (data: any) => {
+    const jwt = new JwtStorage("accessToken");
+    jwt.token = data?.login.accessToken || null;
+  };
+
+  const getCurrentURLRedirect = () => {
+    const redirectURL = new URLSearchParams(location.search).get("redirect");
+    return redirectURL;
+  };
+
+  const redirectToRouter = (pathname: string) => {
+    if (pathname) {
+      location.href = location.origin + pathname;
+    } else {
+      location.href = "/admin/dashboard";
     }
   };
 
