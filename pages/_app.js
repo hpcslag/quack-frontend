@@ -8,6 +8,7 @@ import PageChange from "../components/PageChange/PageChange.js";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../styles/tailwind.css";
+import "../styles/klatsch.css";
 
 import { ApolloProvider } from "@apollo/client";
 import client from "./apollo-client";

@@ -10,8 +10,9 @@ import CardSocialTraffic from "../../components/Cards/CardSocialTraffic.js";
 // layout for page
 
 import Admin from "../../layouts/Admin.js";
+import { withSession } from "../../components/Auth/SessionHOC";
 
-export default function Dashboard() {
+const Dashboard = withSession(() => {
   return (
     <>
       <div className="flex flex-wrap">
@@ -32,6 +33,8 @@ export default function Dashboard() {
       </div>
     </>
   );
-}
+});
+
+export default Dashboard;
 
 Dashboard.layout = Admin;
