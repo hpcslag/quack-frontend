@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { gql, useMutation } from "@apollo/react-hooks";
+import { Form, Field } from "react-final-form";
 
 // layout for page
 
 import Auth from "../../layouts/Auth";
+import { JwtStorage } from "../../common/auth/jwt/jwt";
 
 enum LoginMethodType {
   Google,
@@ -17,7 +19,7 @@ const LOGIN_MUTATION = gql`
       accessToken
     }
   }
-`
+`;
 
 interface LOGIN_MUTATION_VARIABLES {
   username: string;
@@ -25,33 +27,58 @@ interface LOGIN_MUTATION_VARIABLES {
 }
 
 interface LOGIN_MUTATION_RESULT {
-  accessToken: string;
+  login: {
+    __typename: "LoginResponse";
+    accessToken: string;
+  };
 }
 
 const Login = () => {
-
-  const [login] = useMutation<LOGIN_MUTATION_RESULT, LOGIN_MUTATION_VARIABLES>(LOGIN_MUTATION);
+  const [login] = useMutation<LOGIN_MUTATION_RESULT, LOGIN_MUTATION_VARIABLES>(
+    LOGIN_MUTATION
+  );
 
   const [loginMethod, setLoginMethod] = useState<LoginMethodType>(
     LoginMethodType.Google
   );
 
-  const loginParams : LOGIN_MUTATION_VARIABLES = {
-    username: "a",
-    password: "a"
-  }
+  const onLoginFormValidation = (values: any) => {
+    const errors = {} as any;
+    if (!values.email) {
+      errors.email = "Required";
+    }
 
-  const onLogin = async (e : any) => {
-    e.preventDefault();
+    if (!values.password) {
+      errors.password = "Required";
+    }
 
-    const { data } = await login({
-      variables: loginParams
-    });
+    return errors;
+  };
 
-    const accessToken = data?.accessToken
-    
-    console.log(accessToken); //write in local storage
+  const [loginState, setLoginState] = useState({
+    error: false,
+    errorMessage: "",
+  });
 
+  const onLogin = async ({ email, password }: any) => {
+    const loginParams: LOGIN_MUTATION_VARIABLES = {
+      username: email,
+      password: password,
+    };
+
+    try {
+      const { data } = await login({
+        variables: loginParams,
+      });
+
+      const jwt = new JwtStorage("accessToken");
+      jwt.token = data?.login.accessToken || null;
+    } catch (e) {
+      setLoginState({
+        error: true,
+        errorMessage: "Wrong username or password. ",
+      });
+    }
   };
 
   return (
@@ -99,57 +126,81 @@ const Login = () => {
                   <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
                     <div className="text-blueGray-400 text-center mb-3 font-bold">
                       <small>Or sign in with credentials</small>
+                      {loginState.error && (
+                        <>
+                          <br />
+                          <small style={{ color: "red" }}>
+                            {loginState.errorMessage}
+                          </small>
+                        </>
+                      )}
                     </div>
-                    <form onSubmit={onLogin}>
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Email"
-                        />
-                      </div>
-
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Password
-                        </label>
-                        <input
-                          type="password"
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Password"
-                        />
-                      </div>
-                      <div>
-                        <label className="inline-flex items-center cursor-pointer">
-                          <input
-                            id="customCheckLogin"
-                            type="checkbox"
-                            className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                    <Form
+                      onSubmit={onLogin}
+                      validate={onLoginFormValidation}
+                      render={({ handleSubmit }) => (
+                        <form onSubmit={handleSubmit}>
+                          <Field
+                            name="email"
+                            render={({ input, meta }) => (
+                              <div className="relative w-full mb-3">
+                                <label
+                                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                  htmlFor="grid-password"
+                                >
+                                  Email
+                                </label>
+                                <input
+                                  type="text"
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                  placeholder="Email"
+                                  {...input}
+                                />
+                                {meta.touched && meta.error && (
+                                  <span style={{ color: "red" }}>
+                                    {meta.error}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                           />
-                          <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                            Remember me
-                          </span>
-                        </label>
-                      </div>
 
-                      <div className="text-center mt-6">
-                        <button
-                          className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                          type="button"
-                        >
-                          Sign In
-                        </button>
-                      </div>
-                    </form>
+                          <Field
+                            name="password"
+                            render={({ input, meta }) => (
+                              <div className="relative w-full mb-3">
+                                <label
+                                  className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                  htmlFor="grid-password"
+                                >
+                                  Password
+                                </label>
+                                <input
+                                  type="password"
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                  placeholder="Password"
+                                  {...input}
+                                />
+                                {meta.touched && meta.error && (
+                                  <span style={{ color: "red" }}>
+                                    {meta.error}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          />
+
+                          <div className="text-center mt-6">
+                            <button
+                              className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                              type="submit"
+                            >
+                              Sign In
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                    />
                   </div>
                 )}
             </div>
