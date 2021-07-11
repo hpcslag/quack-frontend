@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { gql, useMutation } from "@apollo/react-hooks";
-
 import { Form, Field } from "react-final-form";
 
 // layout for page
