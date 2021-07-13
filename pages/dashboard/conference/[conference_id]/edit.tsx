@@ -13,6 +13,14 @@ const Edit = () => {
   const router = useRouter();
   const { conference_id } = router.query;
 
+  const columns = [
+    {
+      name: "",
+      label: "",
+      defaultValue: "",
+    },
+  ];
+
   return (
     <>
       <div className="flex flex-wrap mt-4">
