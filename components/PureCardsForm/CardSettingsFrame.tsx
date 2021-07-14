@@ -2,7 +2,7 @@ import React from "react";
 
 // components
 
-const CardSettingsFrame = ({ children, name }) => {
+const CardSettingsFrame = ({ children, name, onClick }) => {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -12,22 +12,19 @@ const CardSettingsFrame = ({ children, name }) => {
             <button
               className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="button"
+              onClick={onClick}
             >
               儲存
             </button>
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-          <form>
-            <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Instructions
-            </h6>
-            <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4">{children}</div>
-            </div>
+          <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase"></h6>
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-6/12 px-4">{children}</div>
+          </div>
 
-            <hr className="mt-6 border-b-1 border-blueGray-300" />
-          </form>
+          <hr className="mt-6 border-b-1 border-blueGray-300" />
         </div>
       </div>
     </>
