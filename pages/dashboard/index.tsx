@@ -15,11 +15,24 @@ import Pure from "../../layouts/Pure";
 import { withSession } from "../../components/Auth/SessionHOC";
 
 const Dashboard = withSession(() => {
+  const onDeleteActivity = (id:number) {
+    
+  }
+
+  const conferecnes = [
+    {
+      id: 1,
+      conference_name: "CONFERENCE 21",
+      location: "ICCK 高雄國際會議中心 (Taiwan, Kaohsiung)",
+      status: "Preparing",
+      
+    }
+  ]
   return (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <ActivitiesListSelection />
+          <ActivitiesListSelection conferences={conferecnes} onDelete={onDeleteActivity} />
         </div>
       </div>
     </>
