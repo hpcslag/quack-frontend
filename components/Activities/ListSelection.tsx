@@ -1,7 +1,12 @@
+import React, { useState } from "react";
+import PureConfirmModal from "../PureModels/PureConfirm";
+
 {
   /* https://codepen.io/1159985/pen/PomGXPY */
 }
 const ActivitiesListSelection = () => {
+  const deleteActivityHook = useState(null);
+  const onDeleteActivityConfirm = (activity_id: any) => {};
   return (
     <>
       <div className="p-8">
@@ -48,6 +53,14 @@ const ActivitiesListSelection = () => {
         <br />
         <br />
       </div>
+
+      {/* Delete Modal Confirm */}
+      <PureConfirmModal
+        title="您確定要刪除? "
+        content="一旦刪除之後，就無法復原這個活動。"
+        modalStateHook={deleteActivityHook}
+        onConfirm={onDeleteActivityConfirm}
+      />
     </>
   );
 };
