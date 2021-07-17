@@ -5,10 +5,13 @@ import PureCardsAutoForm, {
   AutoFormColumn,
 } from "../../../../components/PureCardsForm/PureCardsAutoForm";
 
+import PureConfirmModal from "../../../../components/PureModels/PureConfirm";
+
 // layout for page
 
 import Pure from "../../../../layouts/Pure";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Edit = () => {
   const router = useRouter();
@@ -18,7 +21,9 @@ const Edit = () => {
     console.log("submit", values);
   };
 
-  const onDeleteActivity = (conference_id) => () => {
+  const deleteActivityHook = useState<any>(null);
+
+  const onDeleteActivityConfirm = (conference_id) => {
     console.log("delete activity", conference_id);
   };
 
@@ -62,7 +67,10 @@ const Edit = () => {
           <button
             className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
-            onClick={onDeleteActivity(conference_id)}
+            onClick={() => {
+              const [_, setDeleteConf] = deleteActivityHook;
+              setDeleteConf(conference_id);
+            }}
           >
             刪除
           </button>
@@ -84,6 +92,13 @@ const Edit = () => {
           />
         </div>
       </div>
+      {/* Delete Modal Confirm */}
+      <PureConfirmModal
+        title="您確定要刪除? "
+        content="一旦刪除之後，就無法復原這個活動。"
+        modalStateHook={deleteActivityHook}
+        onConfirm={onDeleteActivityConfirm}
+      />
     </>
   );
 };
