@@ -15,7 +15,11 @@ export interface AutoFormColumn {
     | "multi-selection"
     | "radio-checkbox"
     | "multi-checkbox"
+    | "custom"
+    | "linebreak"
+    | "header"
     | string;
+  customChildren?: (input: any, meta: any) => JSX.Element;
   optionsValue?: { label: string; value: string }[]; // this is for selection, multi-selection, radio-checkbox, multi-checkbox
 }
 
@@ -155,6 +159,38 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                             />
                           )}
                         />
+                      );
+                    case "custom":
+                      return (
+                        <Field
+                          key={`${id}-form-field-${index}`}
+                          name={col.name}
+                          render={({ input, meta }) => (
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                {col.label}
+                              </label>
+                              {col.customChildren!(input, meta)}
+                            </div>
+                          )}
+                        />
+                      );
+                    case "linebreak":
+                      return (
+                        <>
+                          <br />
+                          <hr className="mt-6 border-b-1 border-blueGray-300" />
+                          <br />
+                        </>
+                      );
+                    case "header":
+                      return (
+                        <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                          {col.label}
+                        </h6>
                       );
                   }
                 })}

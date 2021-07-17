@@ -1,6 +1,6 @@
 /*! tailwindcss v2.0.4 | MIT License | https://tailwindcss.com */
 
-/*! modern-normalize v1.0.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
 /*
 Document
@@ -12,8 +12,8 @@ Use a better box model (opinionated).
 */
 
 *,
-*::before,
-*::after {
+::before,
+::after {
   box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@ Use a better box model (opinionated).
 Use a more readable tab size (opinionated).
 */
 
-:root {
+html {
   -moz-tab-size: 4;
   tab-size: 4;
 }
@@ -1364,6 +1364,11 @@ select {
   background-color: rgba(148, 163, 184, var(--tw-bg-opacity));
 }
 
+.bg-blueGray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(100, 116, 139, var(--tw-bg-opacity));
+}
+
 .bg-blueGray-600 {
   --tw-bg-opacity: 1;
   background-color: rgba(71, 85, 105, var(--tw-bg-opacity));
@@ -1392,6 +1397,16 @@ select {
 .active\:bg-indigo-600:active {
   --tw-bg-opacity: 1;
   background-color: rgba(79, 70, 229, var(--tw-bg-opacity));
+}
+
+.active\:bg-emerald-600:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
+}
+
+.active\:bg-orange-600:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(234, 88, 12, var(--tw-bg-opacity));
 }
 
 .active\:bg-blueGray-50:active {
@@ -1459,6 +1474,11 @@ select {
 
 .border-separate {
   border-collapse: separate;
+}
+
+.border-orange-500 {
+  --tw-border-opacity: 1;
+  border-color: rgba(249, 115, 22, var(--tw-border-opacity));
 }
 
 .border-gray-200 {
@@ -1622,8 +1642,20 @@ select {
   border-left-width: 0px;
 }
 
+.border-t-2 {
+  border-top-width: 2px;
+}
+
+.border-r-2 {
+  border-right-width: 2px;
+}
+
 .border-b-2 {
   border-bottom-width: 2px;
+}
+
+.border-l-8 {
+  border-left-width: 8px;
 }
 
 .border-t {
@@ -2058,6 +2090,10 @@ select {
   font-weight: 700;
 }
 
+.font-extrabold {
+  font-weight: 800;
+}
+
 .h-0 {
   height: 0px;
 }
@@ -2072,6 +2108,10 @@ select {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.h-6 {
+  height: 1.5rem;
 }
 
 .h-8 {
@@ -2390,6 +2430,10 @@ select {
   margin-top: 4rem;
 }
 
+.ml-16 {
+  margin-left: 4rem;
+}
+
 .mt-20 {
   margin-top: 5rem;
 }
@@ -2546,6 +2590,14 @@ select {
   object-fit: scale-down;
 }
 
+.opacity-5 {
+  opacity: 0.05;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
 .opacity-50 {
   opacity: 0.5;
 }
@@ -2675,6 +2727,10 @@ select {
   padding: 1.25rem;
 }
 
+.p-6 {
+  padding: 1.5rem;
+}
+
 .p-8 {
   padding: 2rem;
 }
@@ -2767,6 +2823,11 @@ select {
   padding-bottom: 4rem;
 }
 
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
 .py-20 {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -2809,6 +2870,10 @@ select {
 
 .pl-3 {
   padding-left: 0.75rem;
+}
+
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .pr-4 {
@@ -2933,6 +2998,13 @@ select {
 .sticky {
   position: -webkit-sticky;
   position: sticky;
+}
+
+.inset-0 {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
 .top-0 {
@@ -3250,6 +3322,11 @@ select {
   color: rgba(63, 63, 70, var(--tw-text-opacity));
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgba(39, 39, 42, var(--tw-text-opacity));
+}
+
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgba(24, 24, 27, var(--tw-text-opacity));
@@ -3521,8 +3598,16 @@ select {
   width: 0.25rem;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
 .w-5 {
   width: 1.25rem;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-8 {
@@ -3547,6 +3632,10 @@ select {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
 }
 
 .w-6\/12 {

@@ -5,10 +5,6 @@ import React from "react";
   /* https://codepen.io/1159985/pen/PomGXPY */
 }
 const ActivitiesListSelection = ({ conferences, onDelete }) => {
-  const deleteActivity = (id: any) => () => {
-    onDelete ? onDelete(id) : null;
-  };
-
   return (
     <>
       <div className="p-8">
@@ -19,22 +15,21 @@ const ActivitiesListSelection = ({ conferences, onDelete }) => {
           </h4>
         </div>
 
-        {conferences.map((conf: any) => (
-          <>
+        {conferences.map((conf: any, index: any) => (
+          <div key={`la-id-${index}`}>
             <div className="flex px-4 items-center bg-white shadow-lg ml-16 h-24 rounded-custom border-l-8 border-orange-500">
               <div className="flex flex-col justify-center items-center border-r-2 border-gray-200 px-4">
-                <p className="font-extrabold text-xl text-gray-900">4:00 PM</p>
-                <p className="text-sm text-gray-600">45 minutes</p>
-              </div>
-              <div className="px-4">
-                <img
-                  src="https://www.mykhel.com/thumb/250x90x250/football/players/4/19054.jpg"
-                  alt=""
-                  className="h-16 w-16 rounded-full"
-                />
+                <button
+                  className="bg-orange-500 text-white active:bg-orange-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  進入活動
+                </button>
               </div>
               <div className="flex flex-col px-4">
-                <p className="font-extrabold text-xl text-gray-900"></p>
+                <p className="font-extrabold text-xl text-gray-900">
+                  {conf.conference_name}
+                </p>
                 <p className="text-sm text-gray-600 flex items-center">
                   {conf.location}
                 </p>
@@ -49,14 +44,20 @@ const ActivitiesListSelection = ({ conferences, onDelete }) => {
                 </div>
               </div>
               <div className="flex  flex-grow justify-end">
-                進入活動 |{" "}
-                <Link href={`/dashboard/conference/${conf.id}/edit`}>編輯</Link>{" "}
-                | <a onClick={deleteActivity(conf.id)}>刪除</a>
+                <button
+                  className="bg-blueGray-500 text-white active:bg-blueGray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() =>
+                    (location.href = `/dashboard/conference/${conf.id}/edit`)
+                  }
+                >
+                  編輯
+                </button>
               </div>
             </div>
             <br />
             <br />
-          </>
+          </div>
         ))}
         <br />
       </div>
