@@ -10,7 +10,7 @@ import Pure from "../../layouts/Pure";
 import { withSession } from "../../components/Auth/SessionHOC";
 import PureConfirmModal from "../../components/PureModels/PureConfirm";
 
-const Dashboard = withSession(() => {
+const Dashboard = () => {
   const deleteActivityHook = useState(null);
   const onDeleteActivity = (activity_id: any) => {
     const [_, setDeleteActivityHook] = deleteActivityHook;
@@ -48,7 +48,7 @@ const Dashboard = withSession(() => {
       />
     </>
   );
-});
+};
 
 export default Dashboard;
 
