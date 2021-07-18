@@ -2,15 +2,15 @@ import React, { useState } from "react";
 
 // components
 
-import ActivitiesListSelection from "../../components/Activities/ListSelection";
+import ActivitiesListSelection from "../../../../components/Activities/ListSelection";
 
 // layout for page
 
-import Pure from "../../layouts/Pure";
-import { withSession } from "../../components/Auth/SessionHOC";
-import PureConfirmModal from "../../components/PureModels/PureConfirm";
+import Pure from "../../../../layouts/Pure";
+import { withSession } from "../../../../components/Auth/SessionHOC";
+import PureConfirmModal from "../../../../components/PureModels/PureConfirm";
 
-const Dashboard = withSession(() => {
+const Conference = () => {
   const deleteActivityHook = useState(null);
   const onDeleteActivity = (activity_id: any) => {
     const [_, setDeleteActivityHook] = deleteActivityHook;
@@ -39,17 +39,10 @@ const Dashboard = withSession(() => {
           />
         </div>
       </div>
-      {/* Delete Modal Confirm */}
-      <PureConfirmModal
-        title="您確定要刪除? "
-        content="一旦刪除之後，就無法復原這個活動。"
-        modalStateHook={deleteActivityHook}
-        onConfirm={onDeleteActivityConfirm}
-      />
     </>
   );
-});
+};
 
-export default Dashboard;
+export default Conference;
 
-Dashboard.layout = Pure;
+Conference.layout = Pure;
