@@ -14,9 +14,10 @@ interface StaffListColumn {
   living: string;
   slack_id: string;
   phone: string;
+  remark: string;
 }
 
-const ListTableCard = ({ color }) => {
+const ListTableCard = ({ color, additional_title }) => {
   const staffs: StaffListColumn[] = [
     {
       id: 1,
@@ -27,12 +28,19 @@ const ListTableCard = ({ color }) => {
       slack_id: "@dsadasd",
       phone: "0855225255",
       age: 12,
+      remark: "XX股股員",
     },
   ];
 
   const options: DropdownOption[] = [
     {
       name: "移除志工",
+      action: (data: any) => {
+        console.log(data);
+      },
+    },
+    {
+      name: "標記失聯",
       action: (data: any) => {
         console.log(data);
       },
@@ -56,7 +64,7 @@ const ListTableCard = ({ color }) => {
                   (color === "light" ? "text-blueGray-700" : "text-white")
                 }
               >
-                志工列表
+                {additional_title ? additional_title : "志工列表"}
               </h3>
             </div>
           </div>
@@ -156,7 +164,13 @@ const ListTableCard = ({ color }) => {
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <i className="fas fa-circle text-emerald-500 mr-2"></i>{" "}
-                    正常互動 (2021/06/12)
+                    正常互動 (2021/06/12) &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button
+                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                    >
+                      更新
+                    </button>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     {staff.phone}
@@ -165,7 +179,7 @@ const ListTableCard = ({ color }) => {
                     <div className="flex items-center">{staff.slack_id}</div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <div className="flex items-center">XX股股員</div>
+                    <div className="flex items-center">{staff.remark}</div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                     <PureDropdown options={options} data={staff} />
