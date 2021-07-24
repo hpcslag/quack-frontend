@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Field } from "react-final-form";
 import { CardTextInput } from "./CardInputItems";
+import { CardMulticheck } from "./CardMulticheckItems";
+import { CardSelection } from "./CardSelectionItem";
 import CardSettingsFrame from "./CardSettingsFrame";
 
 export interface AutoFormColumn {
@@ -68,11 +70,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -84,11 +86,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -101,13 +103,14 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
-                            <CardTextInput
+                            <CardSelection
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
+                              optionsValue={col.optionsValue}
                             />
                           )}
                         />
@@ -117,11 +120,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              inputDefaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -133,11 +136,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -150,12 +153,14 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                           key={`${id}-form-field-${index}`}
                           name={col.name}
                           render={({ input, meta }) => (
-                            <CardTextInput
+                            <CardMulticheck
+                              groupId={`${id}-form-field-${index}-checkbox`}
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
+                              inputDefaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
+                              optionsValue={col.optionsValue}
                             />
                           )}
                         />
@@ -180,15 +185,18 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                       );
                     case "linebreak":
                       return (
-                        <>
+                        <div key={`${id}-form-field-${index}`}>
                           <br />
                           <hr className="mt-6 border-b-1 border-blueGray-300" />
                           <br />
-                        </>
+                        </div>
                       );
                     case "header":
                       return (
-                        <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        <h6
+                          className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase"
+                          key={`${id}-form-field-${index}`}
+                        >
                           {col.label}
                         </h6>
                       );

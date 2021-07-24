@@ -3,15 +3,28 @@ import React from "react";
 // components
 import PureCardsAutoForm, {
   AutoFormColumn,
-} from "../../../components/PureCardsForm/PureCardsAutoForm";
+} from "../../../../components/PureCardsForm/PureCardsAutoForm";
+
+import PureConfirmModal from "../../../../components/PureModels/PureConfirm";
 
 // layout for page
 
-import Pure from "../../../layouts/Pure";
+import Pure from "../../../../layouts/Pure";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
-const AddVolunteer = () => {
-  const onCreateVolunteer = (values: any) => {
-    console.log("submit", values);
+const Edit = () => {
+  const router = useRouter();
+  const { profile_id } = router.query;
+
+  const onSaveVolunteer = (profile_id: any) => (values: any) => {
+    console.log("submit", values, profile_id);
+  };
+
+  const deleteVolunteerHook = useState<any>(null);
+
+  const onDeleteVolunteerConfirm = (profile_id: any) => {
+    console.log("delete volunteer", profile_id);
   };
 
   const columns: AutoFormColumn[] = [
@@ -24,19 +37,19 @@ const AddVolunteer = () => {
     {
       name: "lastname",
       label: "姓氏",
-      defaultValue: "",
+      defaultValue: "sdffdsdfs",
       type: "text",
     },
     {
       name: "firstname",
       label: "名字",
-      defaultValue: "",
+      defaultValue: "fdsfdsfds",
       type: "text",
     },
     {
       name: "age",
       label: "age",
-      defaultValue: "",
+      defaultValue: "43",
       type: "年齡",
     },
     {
@@ -102,7 +115,7 @@ const AddVolunteer = () => {
     {
       name: "vegetable",
       label: "飲食習慣 (葷 / 素 / 不蝦...)",
-      defaultValue: [],
+      defaultValue: ["不蝦"],
       type: "multi-checkbox",
       optionsValue: [
         {
@@ -155,6 +168,38 @@ const AddVolunteer = () => {
       defaultValue: "",
       type: "text",
     },
+    {
+      name: "lb",
+      label: "",
+      defaultValue: "",
+      type: "linebreak",
+    },
+    {
+      name: "hd",
+      label: "其他選項",
+      defaultValue: "",
+      type: "header",
+    },
+    {
+      name: "volunteer_delete",
+      label: "刪除志工",
+      defaultValue: "dasda",
+      customChildren: (_input, _meta) => (
+        <>
+          <button
+            className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() => {
+              const [_, setDeleteStaff] = deleteVolunteerHook;
+              setDeleteStaff(profile_id);
+            }}
+          >
+            刪除
+          </button>
+        </>
+      ),
+      type: "custom",
+    },
   ];
 
   return (
@@ -162,17 +207,24 @@ const AddVolunteer = () => {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <PureCardsAutoForm
-            id="conference-setting"
-            title="新增志工"
-            onSubmit={onCreateVolunteer}
+            id="volunteer-setting"
+            title="志工設定"
+            onSubmit={onSaveVolunteer(profile_id)}
             columns={columns}
           />
         </div>
       </div>
+      {/* Delete Modal Confirm */}
+      <PureConfirmModal
+        title="您確定要刪除? "
+        content="一旦刪除之後，就無法復原這個志工。"
+        modalStateHook={deleteVolunteerHook}
+        onConfirm={onDeleteVolunteerConfirm}
+      />
     </>
   );
 };
 
-export default AddVolunteer;
+export default Edit;
 
-AddVolunteer.layout = Pure;
+Edit.layout = Pure;
