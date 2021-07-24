@@ -120,6 +120,121 @@ const Sidebar = () => {
               志工管理
             </h6>
             {/* Navigation */}
+            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
+              <li className="items-center">
+                <Link href="/dashboard/volunteers">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/dashboard/volunteers") !== -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-user mr-2 text-sm " +
+                        (router.pathname.indexOf("/dashboard/volunteers") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    志工列表
+                  </a>
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link href="/dashboard/volunteers/add">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/dashboard/volunteers/add") !==
+                      -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-user-plus mr-2 text-sm " +
+                        (router.pathname.indexOf(
+                          "/dashboard/volunteers/add"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    新增志工
+                  </a>
+                </Link>
+              </li>
+            </ul>
+
+            {/* Divider */}
+            <hr className="my-4 md:min-w-full" />
+            {/* Heading */}
+            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              通知管理
+            </h6>
+            {/* Navigation */}
+            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
+              <li className="items-center">
+                <Link href="/dashboard/notification/notify-list">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf(
+                        "/dashboard/notification/notify-list"
+                      ) !== -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-comment-alt mr-2 text-sm " +
+                        (router.pathname.indexOf(
+                          "/dashboard/notification/notify-list"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    通知列表
+                  </a>
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link href="/dashboard/notification/notify-plan">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf(
+                        "/dashboard/notification/notify-plan"
+                      ) !== -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-edit mr-2 text-sm " +
+                        (router.pathname.indexOf(
+                          "/dashboard/notification/notify-plan"
+                        ) !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    撰寫通知
+                  </a>
+                </Link>
+              </li>
+            </ul>
 
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
@@ -128,6 +243,31 @@ const Sidebar = () => {
               系統設定
             </h6>
             {/* Navigation */}
+            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
+              <li className="items-center">
+                <Link href="/dashboard/settings">
+                  <a
+                    href="#pablo"
+                    className={
+                      "text-xs uppercase py-3 font-bold block " +
+                      (router.pathname.indexOf("/dashboard/settings") !== -1
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                  >
+                    <i
+                      className={
+                        "fas fa-comment-alt mr-2 text-sm " +
+                        (router.pathname.indexOf("/dashboard/settings") !== -1
+                          ? "opacity-75"
+                          : "text-blueGray-300")
+                      }
+                    ></i>{" "}
+                    AWS/GCP 設定
+                  </a>
+                </Link>
+              </li>
+            </ul>
 
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
