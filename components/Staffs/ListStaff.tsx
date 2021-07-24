@@ -34,9 +34,9 @@ const ListTableCard = ({ color, additional_title }) => {
 
   const options: DropdownOption[] = [
     {
-      name: "移除志工",
+      name: "編輯志工",
       action: (data: any) => {
-        console.log(data);
+        location.pathname = `/dashboard/volunteers/${data.id}/edit`;
       },
     },
     {

@@ -70,11 +70,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -86,11 +86,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              defaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -103,11 +103,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardSelection
                               name={col.name}
                               label={col.label}
-                              inputDefaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                               optionsValue={col.optionsValue}
@@ -120,11 +120,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              inputDefaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -136,11 +136,11 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                         <Field
                           key={`${id}-form-field-${index}`}
                           name={col.name}
+                          defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
                               name={col.name}
                               label={col.label}
-                              inputDefaultValue={col.defaultValue}
                               input={input}
                               meta={meta}
                             />
@@ -185,15 +185,18 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                       );
                     case "linebreak":
                       return (
-                        <>
+                        <div key={`${id}-form-field-${index}`}>
                           <br />
                           <hr className="mt-6 border-b-1 border-blueGray-300" />
                           <br />
-                        </>
+                        </div>
                       );
                     case "header":
                       return (
-                        <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                        <h6
+                          className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase"
+                          key={`${id}-form-field-${index}`}
+                        >
                           {col.label}
                         </h6>
                       );

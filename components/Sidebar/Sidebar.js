@@ -127,7 +127,7 @@ const Sidebar = () => {
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/dashboard/volunteers") !== -1
+                      (router.pathname === "/dashboard/volunteers"
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -135,7 +135,7 @@ const Sidebar = () => {
                     <i
                       className={
                         "fas fa-user mr-2 text-sm " +
-                        (router.pathname.indexOf("/dashboard/volunteers") !== -1
+                        (router.pathname === "/dashboard/volunteers"
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }

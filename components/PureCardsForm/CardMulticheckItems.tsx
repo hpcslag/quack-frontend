@@ -12,6 +12,7 @@ export const CardMulticheck = ({
   const [checkedItems, setCheckedItems] = useState([]);
 
   useEffect(() => {
+    console.log(inputDefaultValue);
     const opValueWithChecked = optionsValue.map((v: any) => ({
       ...v,
       checked: inputDefaultValue
@@ -19,13 +20,17 @@ export const CardMulticheck = ({
         : false,
     }));
     setCheckedItems(opValueWithChecked);
+    changeFinalFormInput(opValueWithChecked);
   }, []);
 
   const onCheckItem = (item_id: number) => (isChecked: any) => {
     const newCheckedItems = checkedItems as any;
     newCheckedItems[item_id].checked = isChecked.target.checked;
     setCheckedItems(newCheckedItems);
+    changeFinalFormInput(newCheckedItems);
+  };
 
+  const changeFinalFormInput = (newCheckedItems: any) => {
     input.onChange(
       newCheckedItems.filter((v: any) => v.checked).map((v: any) => v.value)
     );
