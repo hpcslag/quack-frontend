@@ -31,7 +31,7 @@ const ActivitiesListSelection = ({ conferences, onDelete }) => {
               </div>
               <div className="flex flex-col px-4">
                 <p className="font-extrabold text-xl text-gray-900">
-                  {conf.conference_name}
+                  {conf.conf_name}
                 </p>
                 <p className="text-sm text-gray-600 flex items-center">
                   {conf.location}
