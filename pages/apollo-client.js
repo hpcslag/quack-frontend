@@ -10,6 +10,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   const jwt = new JwtStorage("accessToken");
   const token = jwt.token;
+  if (!jwt.token) console.log("accessToken is expired");
   // return the headers to the context so httpLink can read them
   return {
     headers: {
