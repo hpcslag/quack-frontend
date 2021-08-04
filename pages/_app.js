@@ -11,7 +11,7 @@ import "../styles/tailwind.css";
 import "../styles/klatsch.css";
 
 import { ApolloProvider } from "@apollo/client";
-import client from "./apollo-client";
+import { authClient } from "./apollo-client";
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -78,7 +78,7 @@ export default class MyApp extends App {
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
         <Layout>
-          <ApolloProvider client={client}>
+          <ApolloProvider client={authClient}>
             <Component {...pageProps} />
           </ApolloProvider>
         </Layout>
