@@ -36,7 +36,7 @@ const ListTableCard = ({ color, additional_title }) => {
     {
       name: "面試紀錄 / 資料編輯",
       action: (data: any) => {
-        location.pathname = `/dashboard/volunteers/${data.id}/edit`;
+        location.href = `./interviews/${data.id}/edit`;
       },
     },
   ];
@@ -60,9 +60,17 @@ const ListTableCard = ({ color, additional_title }) => {
               >
                 {additional_title ? additional_title : "志工列表"}
               </h3>
+              <button
+                className="bg-lightBlue-500 text-white active:bg-lightBlue-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                type="button"
+                onClick={() => (location.href = `./interviews/new_interview`)}
+              >
+                新增面試志工 +
+              </button>
             </div>
           </div>
         </div>
+
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
