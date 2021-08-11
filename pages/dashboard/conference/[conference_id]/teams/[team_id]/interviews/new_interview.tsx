@@ -11,13 +11,21 @@ import Pure from "../../../../../../../layouts/Pure";
 
 const AddInterview = () => {
   const [suggest, setSuggest] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const searchVolunteer = (e) => {
-    const searchText = e.target.value;
+    setSearchText(e.target.value);
+
     setSuggest([{ name: "TEST VOLUNTEER", id: 1 }]);
   };
   const [btwCreateVolunteer, setBtwCreateVolunteer] = useState(false);
   const onCreateVolunteer = (values: any) => {
     console.log("submit", values);
+  };
+
+  const selectedExistsVolunteer = (volunteer: any) => () => {
+    setSelectedVolunteers([...selectedVolunteers, volunteer] as any);
+    setSearchText("");
   };
 
   const columns: AutoFormColumn[] = [
@@ -201,27 +209,44 @@ const AddInterview = () => {
                   >
                     選擇加入面談的志工 - 尋找志工
                   </label>
+                  <br />
+                  {selectedVolunteers.map((volunteer) => (
+                    <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-emerald-600 bg-emerald-200 uppercase last:mr-0 mr-1">
+                      {volunteer.name}
+                    </span>
+                  ))}
+
+                  <br />
+                  <br />
                   <input
                     type="text"
                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     onChange={searchVolunteer}
+                    value={searchText}
                   />
-                  <div className="absolute w-full z-50 bg-white border border-gray-300 mt-1 mh-48 overflow-hidden overflow-y-scroll rounded-md shadow-md">
-                    <ul className="py-1">
-                      {suggest.map((volunteer) => (
-                        <li className="px-3 py-2 cursor-pointer hover:bg-blueGray-200">
-                          {volunteer.name}
-                        </li>
-                      ))}
-                      {suggest.length === 0 && (
-                        <li className="px-3 py-2 text-center">
-                          No Matching Results
-                        </li>
-                      )}
-                    </ul>
-                  </div>
+                  {searchText && (
+                    <div className="absolute w-full z-50 bg-white border border-gray-300 mt-1 mh-48 overflow-hidden overflow-y-scroll rounded-md shadow-md">
+                      <ul className="py-1">
+                        {suggest.map((volunteer) => (
+                          <li
+                            className="px-3 py-2 cursor-pointer bg-white hover:bg-blueGray-200"
+                            onClick={selectedExistsVolunteer(volunteer)}
+                          >
+                            {volunteer.name}
+                          </li>
+                        ))}
+                        {suggest.length === 0 && (
+                          <li className="px-3 py-2 text-center">
+                            No Matching Results
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
+              <hr className="mt-6 border-b-1 border-blueGray-300" />
+              選擇加入的組別
             </div>
           </div>
         </div>
