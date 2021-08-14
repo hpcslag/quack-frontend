@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
 import { CardTextInput } from "./CardInputItems";
+import { CardNumberInput } from "./CardNumberInputItems";
 import { CardMulticheck } from "./CardMulticheckItems";
 import { CardSelection } from "./CardSelectionItem";
 import CardSettingsFrame from "./CardSettingsFrame";
@@ -12,6 +13,7 @@ export interface AutoFormColumn {
   required?: boolean;
   type:
     | "text"
+    | "number"
     | "textarea"
     | "selection"
     | "multi-selection"
@@ -60,9 +62,12 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
         <Form
           onSubmit={onSubmit}
           validate={onValidation}
-          render={({ handleSubmit }: any) => (
+          render={({ handleSubmit, reset }: any) => (
             <div>
-              <form onSubmit={handleSubmit} id={`${id}-form`}>
+              <form
+                onSubmit={(event) => handleSubmit(event).then(reset)}
+                id={`${id}-form`}
+              >
                 {columns.map((col, index) => {
                   switch (col.type) {
                     case "text":
@@ -73,6 +78,23 @@ const PureCardsAutoForm = ({ id, columns, title, onSubmit }: Props): any => {
                           defaultValue={col.defaultValue}
                           render={({ input, meta }) => (
                             <CardTextInput
+                              name={col.name}
+                              label={col.label}
+                              input={input}
+                              meta={meta}
+                            />
+                          )}
+                        />
+                      );
+                    case "number":
+                      return (
+                        <Field
+                          type="number"
+                          key={`${id}-form-field-${index}`}
+                          name={col.name}
+                          defaultValue={col.defaultValue}
+                          render={({ input, meta }) => (
+                            <CardNumberInput
                               name={col.name}
                               label={col.label}
                               input={input}
