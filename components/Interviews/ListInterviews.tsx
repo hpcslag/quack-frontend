@@ -4,33 +4,14 @@ import PropTypes from "prop-types";
 // components
 
 import PureDropdown, { DropdownOption } from "../Dropdowns/PureDropdown";
-
-interface StaffListColumn {
-  id: number;
-  firstname: string;
-  lastname: string;
-  age: number;
-  email: string;
-  living: string;
-  slack_id: string;
-  phone: string;
-  remark: string;
-}
+import { useInterviews } from "../../common/hooks/Interviews";
+import { useRouter } from "next/router";
 
 const ListTableCard = ({ color, additional_title }) => {
-  const staffs: StaffListColumn[] = [
-    {
-      id: 1,
-      firstname: "Test",
-      lastname: "Test",
-      email: "Test@test.com",
-      living: "kaohsing",
-      slack_id: "@dsadasd",
-      phone: "0855225255",
-      age: 12,
-      remark: "XX股股員",
-    },
-  ];
+  const router = useRouter();
+  const { team_id } = router.query;
+
+  const interviews = useInterviews(team_id as any);
 
   const options: DropdownOption[] = [
     {
@@ -147,7 +128,7 @@ const ListTableCard = ({ color, additional_title }) => {
               </tr>
             </thead>
             <tbody>
-              {staffs.map((staff) => (
+              {interviews.map((IVInfo) => (
                 <tr>
                   <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left items-center">
                     <span
@@ -158,11 +139,13 @@ const ListTableCard = ({ color, additional_title }) => {
                           : "text-white")
                       }
                     >
-                      {`${staff.firstname} ${staff.lastname}`}
+                      {IVInfo.profile
+                        ? `${IVInfo.profile.firstname} ${IVInfo.profile.lastname}`
+                        : "NULL"}
                     </span>
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {staff.email}
+                    {IVInfo.profile ? `${IVInfo.profile.email}` : "NULL"}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                     <i className="fas fa-circle text-emerald-500 mr-2"></i>{" "}
@@ -175,16 +158,18 @@ const ListTableCard = ({ color, additional_title }) => {
                     </button>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {staff.phone}
+                    {IVInfo.profile ? `${IVInfo.profile.phone}` : "NULL"}
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <div className="flex items-center">{staff.slack_id}</div>
+                    <div className="flex items-center">
+                      {IVInfo.profile ? `${IVInfo.profile.slack_id}` : "NULL"}
+                    </div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    <div className="flex items-center">{staff.remark}</div>
+                    <div className="flex items-center">ANY</div>
                   </td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                    <PureDropdown options={options} data={staff} />
+                    <PureDropdown options={options} data={IVInfo} />
                   </td>
                 </tr>
               ))}

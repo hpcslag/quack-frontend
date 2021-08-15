@@ -2,13 +2,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useConferenceTeams } from "../../../../../../../common/hooks/ConferenceTeams";
-import { useCreateVolunteerMutations } from "../../../../../../../common/hooks/CreateVolunteer";
+import { useCreateInterviewsMutation } from "../../../../../../../common/hooks/CreateInterview";
 import { useSearchVolunteer } from "../../../../../../../common/hooks/LazySearchSuggestVolunteer";
 
 // components
-import PureCardsAutoForm, {
-  AutoFormColumn,
-} from "../../../../../../../components/PureCardsForm/PureCardsAutoForm";
 import { CreateVolunteerForm } from "../../../../../../../components/Volunteers/CreateVolunteer";
 
 // layout for page
@@ -19,8 +16,18 @@ const AddInterview = () => {
   const router = useRouter();
   const { conference_id } = router.query;
 
+  const [formData, setFormData] = useState({
+    meet_url: "",
+    memo: "",
+  });
+  const setFormDataByName = (key: string) => (event: any) => {
+    const newFormData = { ...formData, ...{ [key]: event.target.value } };
+    setFormData(newFormData);
+  };
   const [searchText, setSearchText] = useState("");
-  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+  const [selectedVolunteers, setSelectedVolunteers] = useState<
+    { name: string; id: number }[]
+  >([]);
 
   const [search, searchResult] = useSearchVolunteer();
   useEffect(() => {
@@ -57,6 +64,28 @@ const AddInterview = () => {
   };
 
   const teamsByConference = useConferenceTeams(conference_id as any) as any[];
+
+  const createInterviewMutation = useCreateInterviewsMutation();
+  const onCreateInterview = async () => {
+    const team_id = document.getElementById("joiningTeam") as any;
+
+    const eachInterviewerInfoObjects = selectedVolunteers.map((vol) => ({
+      interview_meeting_url: formData.meet_url,
+      interview_memo: formData.memo,
+      profile_id: vol.id,
+      conference_id: conference_id,
+      team_id: team_id.value,
+    }));
+
+    const result = await createInterviewMutation({
+      variables: {
+        input: eachInterviewerInfoObjects as any[],
+      },
+    });
+    if (result.data?.createInterviews) {
+      setTimeout(() => (location.href = "./"), 1000);
+    }
+  };
 
   return (
     <>
@@ -170,9 +199,43 @@ const AddInterview = () => {
                   <br />
                   <select name="joiningTeam" id="joiningTeam">
                     {teamsByConference.map((team: any) => (
-                      <option value={team.team_id}>{team.team_name}</option>
+                      <option value={team.id}>{team.team_name}</option>
                     ))}
                   </select>
+                </div>
+              </div>
+              <hr className="mt-6 border-b-1 border-blueGray-300" />
+            </div>
+            <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+              <div className="w-full lg:w-6/12 px-4">
+                <h3>面談資料預先建立</h3>
+                <br />
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    面談會議室線上連結
+                  </label>
+                  <input
+                    type="text"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    onChange={setFormDataByName("meet_url")}
+                    value={formData.meet_url}
+                  />
+                  <br />
+                  <br />
+                  <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    面談前備註
+                  </label>
+                  <textarea
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    onChange={setFormDataByName("memo")}
+                    value={formData.memo}
+                  />
                 </div>
               </div>
             </div>
@@ -182,6 +245,7 @@ const AddInterview = () => {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
+                    onClick={onCreateInterview}
                   >
                     建立面談資料
                   </button>
