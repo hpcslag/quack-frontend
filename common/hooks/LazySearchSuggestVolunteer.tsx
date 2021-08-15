@@ -50,8 +50,8 @@ interface SEARCH_VOLUNTEER_RESULT {
   }[];
 }
 
-export const useSearchVolunteer = (conference_id: number | string) => {
-  const [searching, { _loading, _error, data }] = useLazyQuery<
+export const useSearchVolunteer = () => {
+  const [searching, { loading, error, data }] = useLazyQuery<
     SEARCH_VOLUNTEER_RESULT,
     SEARCH_VOLUNTEER_VARIABLES
   >(SEARCH_VOLUNTEER);
