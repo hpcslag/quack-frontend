@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 const CONFERENCE_TEAM_QUERY = gql`
   query ConferenceTeams($conference_id: ID!) {
     teams(conferenceId: $conference_id) {
+      id
       team_id
       team_name
       __typename
@@ -13,6 +14,7 @@ const CONFERENCE_TEAM_QUERY = gql`
 interface CONFERENCE_TEAM_QUERY_RESULT {
   teams: {
     __typename: "Team";
+    id: string;
     team_id: number;
     team_name: string;
   };
