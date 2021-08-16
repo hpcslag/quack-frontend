@@ -8,53 +8,27 @@ import TeamsListSelection from "../../../../components/Teams/ListSelection";
 
 import Pure from "../../../../layouts/Pure";
 import { withSession } from "../../../../components/Auth/SessionHOC";
-import PureConfirmModal from "../../../../components/PureModels/PureConfirm";
+import { useRouter } from "next/router";
+import { useConferenceTeams } from "../../../../common/hooks/ConferenceTeams";
 
 const ConferenceTeams = withSession(() => {
-  const deleteActivityHook = useState(null);
-  const onDeleteActivity = (activity_id: any) => {
-    const [_, setDeleteActivityHook] = deleteActivityHook;
-    setDeleteActivityHook(activity_id);
-  };
+  const router = useRouter();
+  const { conference_id } = router.query;
 
-  const onDeleteActivityConfirm = (activity_id: any) => {
-    console.log(activity_id);
-  };
+  const teamsByConference = useConferenceTeams(conference_id as any) as any[];
 
-  const teams = [
-    {
-      id: 1,
-      team_name: "活動組",
-      location: "ICCK 高雄國際會議中心 (Taiwan, Kaohsiung)",
-      status: "Preparing",
-    },
-    {
-      id: 1,
-      team_name: "行政部",
-      location: "ICCK 高雄國際會議中心 (Taiwan, Kaohsiung)",
-      status: "Preparing",
-    },
-    {
-      id: 1,
-      team_name: "議程組",
-      location: "ICCK 高雄國際會議中心 (Taiwan, Kaohsiung)",
-      status: "Preparing",
-    },
-  ];
+  const teams = teamsByConference.map((team: any) => ({
+    id: team.id,
+    team_name: team.team_name,
+  }));
+
   return (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <TeamsListSelection teams={teams} onDelete={onDeleteActivity} />
+          <TeamsListSelection teams={teams} />
         </div>
       </div>
-      {/* Delete Modal Confirm */}
-      <PureConfirmModal
-        title="您確定要刪除? "
-        content="一旦刪除之後，就無法復原這個活動。"
-        modalStateHook={deleteActivityHook}
-        onConfirm={onDeleteActivityConfirm}
-      />
     </>
   );
 });
