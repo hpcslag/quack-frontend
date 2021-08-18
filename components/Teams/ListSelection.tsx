@@ -17,6 +17,15 @@ const ActivitiesListSelection = ({ teams }) => {
           <h4 className="text-xl font-bold text-gray-800 w-1/2 pt-4 mb-4">
             Teams
           </h4>
+          <button
+            className="bg-blueGray-500 text-white active:bg-blueGray-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            onClick={() =>
+              (location.href = `/dashboard/conference/${conference_id}/teams/new`)
+            }
+          >
+            新增組別 +
+          </button>
         </div>
 
         {teams.map((team: any, index: any) => (
