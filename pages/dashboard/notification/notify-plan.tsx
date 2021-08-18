@@ -4,6 +4,7 @@ import React from "react";
 import PureCardsAutoForm, {
   AutoFormColumn,
 } from "../../../components/PureCardsForm/PureCardsAutoForm";
+import { SearchAndSelectVolunteerForm } from "../../../components/Volunteers/SearchVolunteer";
 
 // layout for page
 
@@ -23,39 +24,60 @@ const WriteNotificationDraft = () => {
     },
     {
       name: "subject",
-      label: "Subject",
-      defaultValue: "",
-      type: "text",
-    },
-    {
-      name: "cc",
-      label: "cc (multiple with comma ,)",
-      defaultValue: "",
-      type: "text",
-    },
-    {
-      name: "bcc",
-      label: "bcc (multiple with comma ,)",
-      defaultValue: "",
-      type: "text",
-    },
-    {
-      name: "target",
-      label: "target",
-      defaultValue: "",
-      type: "multi-selection",
-    },
-    {
-      name: "schedule",
-      label: "schedule",
+      label: "主旨",
       defaultValue: "",
       type: "text",
     },
     {
       name: "content",
-      label: "content",
+      label: "內容",
       defaultValue: "",
       type: "textarea",
+    },
+    {
+      name: "lb",
+      label: "",
+      defaultValue: "",
+      type: "linebreak",
+    },
+    {
+      name: "hd",
+      label: "人物",
+      defaultValue: "",
+      type: "header",
+    },
+    {
+      name: "to",
+      label: "傳送對象 (TO)",
+      defaultValue: "dasda",
+      customChildren: (_input, _meta) => (
+        <>
+          <SearchAndSelectVolunteerForm onResult={(a) => console.log(a)} />
+        </>
+      ),
+      type: "custom",
+    },
+    {
+      name: "cc",
+      label: "副本對象 (CC)",
+      defaultValue: "dasda",
+      customChildren: (_input, _meta) => (
+        <>
+          <SearchAndSelectVolunteerForm onResult={(a) => console.log(a)} />
+        </>
+      ),
+      type: "custom",
+    },
+    {
+      name: "bcc",
+      label: "密件副本對象 (BCC)",
+      defaultValue: "dasda",
+      customChildren: (_input, _meta) => (
+        <>
+          <SearchAndSelectVolunteerForm onResult={(a) => console.log(a)} />
+        </>
+      ),
+      type: "custom",
     },
   ];
 
